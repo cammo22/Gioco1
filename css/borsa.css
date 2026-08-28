@@ -1,0 +1,211 @@
+/* BORSA (TELEMETRIA FINANZIARIA DEL GOLFO) */
+
+#tabBorsa h2 {
+  color: var(--gold);
+}
+
+/* RANGE SELECTOR */
+#borsaRg {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+#borsaRg .rg {
+  padding: 6px 16px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-weight: 900;
+  font-size: 0.8rem;
+  background: linear-gradient(180deg, #1f2b44, #121a2c);
+  border: 1px solid var(--line);
+  color: var(--txt-dim);
+  transition: all 0.15s ease;
+}
+
+#borsaRg .rg:hover {
+  color: #fff;
+  border-color: var(--line-active);
+}
+
+#borsaRg .rg.active {
+  background: linear-gradient(180deg, var(--gold), var(--orange));
+  color: #241303;
+  border-color: var(--gold);
+  box-shadow: var(--glow-gold);
+}
+
+/* LIVE TICKER CARDS */
+#borsaTicker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tk {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, rgba(26, 40, 62, 0.7), rgba(14, 22, 36, 0.8));
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: border-color 0.2s;
+}
+
+.tk:hover {
+  border-color: var(--line-active);
+}
+
+.tk .tki {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.tk .tk-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tk .tkn {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--txt-dim);
+  text-transform: uppercase;
+}
+
+.tk .tkv {
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: var(--txt);
+}
+
+.tk .tkc {
+  font-weight: 900;
+  font-size: 0.72rem;
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.tk .tkc.up {
+  color: var(--mint);
+  background: rgba(95, 245, 197, 0.12);
+  border: 1px solid rgba(95, 245, 197, 0.3);
+}
+
+.tk .tkc.down {
+  color: var(--red);
+  background: rgba(255, 77, 100, 0.12);
+  border: 1px solid rgba(255, 77, 100, 0.3);
+}
+
+/* CHART CANVAS */
+.borsa-canvas-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(12, 18, 30, 0.95), rgba(7, 11, 20, 0.98));
+  overflow: hidden;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+#borsaCanvas {
+  display: block;
+  width: 100%;
+  height: 280px;
+}
+
+/* SERIES TOGGLES */
+#borsaLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--r-sm);
+  background: rgba(20, 32, 50, 0.6);
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.leg-item:hover {
+  border-color: var(--line-active);
+}
+
+.leg-item .leg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.leg-item.off {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+/* PANIC EFFECT ON BOSS DEFEAT */
+.market-panic {
+  animation: panicFlash 0.5s ease 3;
+}
+
+@keyframes panicFlash {
+  0%, 100% { border-color: var(--line); }
+  50% { border-color: var(--red); box-shadow: 0 0 24px rgba(255, 77, 100, 0.6); }
+}
+
+/* FLOATING MINI TELEMETRY HUD (BACKGROUND GLASS WIDGET) */
+#floatingBorsaHud {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 35;
+  background: rgba(10, 16, 28, 0.88);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 8px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#floatingBorsaHud:hover {
+  border-color: var(--line-active);
+  transform: translateY(-2px);
+}
+
+#floatingBorsaHud .f-title {
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#floatingBorsaHud .f-rate {
+  font-size: 0.82rem;
+  font-weight: 900;
+  color: var(--txt);
+}

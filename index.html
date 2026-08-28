@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VESUVIO.EXE — Clicker & Merceria di DaProdUniverso</title>
+  
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/arena.css">
+  <link rel="stylesheet" href="css/borsa.css">
+  <link rel="stylesheet" href="css/merceria.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- Fullscreen Animated Volcanic Background -->
+  <div id="worldbg">
+    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#080c14"/>
+          <stop offset="45%" stop-color="#181c2e"/>
+          <stop offset="75%" stop-color="#2d1a1e"/>
+          <stop offset="100%" stop-color="#5a1a12"/>
+        </linearGradient>
+        <linearGradient id="lavaGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffe9a8"/>
+          <stop offset="45%" stop-color="#ff8c3a"/>
+          <stop offset="100%" stop-color="#c41f0f"/>
+        </linearGradient>
+        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ff8c5a" stop-opacity="0.9"/>
+          <stop offset="50%" stop-color="#ff5930" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#ff5930" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      
+      <!-- Sky & Glowing Volcanic Sun -->
+      <rect width="1600" height="900" fill="url(#skyGrad)"/>
+      <circle cx="1200" cy="220" r="320" fill="url(#sunGlow)"/>
+      <circle cx="1200" cy="220" r="85" fill="#ffd9a8" opacity="0.9"/>
+      <circle cx="1200" cy="220" r="115" fill="#ffd9a8" opacity="0.25"/>
+      
+      <!-- Cyber Stars / Embers -->
+      <g opacity="0.45">
+        <circle cx="140" cy="110" r="2" fill="#cfe4ff"/>
+        <circle cx="380" cy="65" r="2.5" fill="#cfe4ff"/>
+        <circle cx="720" cy="130" r="2" fill="#cfe4ff"/>
+        <circle cx="980" cy="50" r="2.5" fill="#cfe4ff"/>
+        <circle cx="1450" cy="80" r="2" fill="#cfe4ff"/>
+        <circle cx="280" cy="170" r="1.5" fill="#cfe4ff"/>
+      </g>
+      
+      <!-- Ruined Industrial Skyline Silhouettes (Napoli Post-Umana) -->
+      <g opacity="0.45">
+        <path d="M120 900 L135 600 L170 595 L190 900 Z" fill="#13100e"/>
+        <path d="M220 900 L232 520 L275 516 L285 900 Z" fill="#16110e"/>
+        <path d="M380 900 L392 640 L430 645 L440 900 Z" fill="#14100e"/>
+        <path d="M510 900 L520 680 L552 686 L560 900 Z" fill="#15100e"/>
+        <path d="M700 900 L708 580 L748 586 L756 900 Z" fill="#17110e"/>
+        <path d="M820 900 L835 460 L878 464 L895 900 Z" fill="#1a120e"/>
+        <path d="M980 900 L992 540 L1028 546 L1036 900 Z" fill="#15100e"/>
+        <path d="M1120 900 L1132 680 L1162 686 L1170 900 Z" fill="#16100e"/>
+        <path d="M1260 900 L1275 500 L1318 506 L1335 900 Z" fill="#1a120e"/>
+        <path d="M1390 900 L1402 620 L1438 626 L1450 900 Z" fill="#15100e"/>
+      </g>
+      
+      <!-- Factory Chimney Plume -->
+      <g id="chimney">
+        <rect x="1430" y="140" width="16" height="110" fill="#241610"/>
+        <circle cx="1438" cy="132" r="7" fill="#1a120c"/>
+      </g>
+      
+      <!-- Massive Erupting Vesuvio -->
+      <path d="M580 900 C610 680 635 500 690 450 C745 410 815 418 860 475 C895 520 912 700 930 900 Z" fill="#190e09"/>
+      <path d="M660 900 C682 740 706 540 758 500 C806 520 844 620 862 900 Z" fill="#291510"/>
+      
+      <!-- Magma Crater -->
+      <g id="crater" transform="translate(768 460)">
+        <ellipse cx="0" cy="0" rx="58" ry="22" fill="#a82405"/>
+        <ellipse class="wMagma" cx="0" cy="0" rx="48" ry="16" fill="url(#lavaGrad)"/>
+        <ellipse class="wGlow" cx="0" cy="0" rx="80" ry="32" fill="#ff8c3a"/>
+      </g>
+      
+      <!-- Cascading Lava Streams -->
+      <path id="flows" d="M728 480 C710 520 684 600 665 680 L652 900 L724 900 L770 540 Z" fill="url(#lavaGrad)" opacity="0.9"/>
+      
+      <!-- Flowing Volcanic Shore & Canal of Lava -->
+      <path d="M0 760 Q280 730 560 750 T1120 750 T1600 760 L1600 900 L0 900 Z" fill="#0f0907"/>
+      <path class="river" d="M0 810 C380 786 860 810 1600 792 L1600 900 L0 900 Z" fill="#ff4824" opacity="0.65"/>
+      <path d="M0 855 C480 838 960 858 1600 846 L1600 900 L0 900 Z" fill="#ff9a3c" opacity="0.35"/>
+    </svg>
+    
+    <!-- Walkers and Ambient Explosions on background -->
+    <div id="botsLayer"></div>
+    <div id="boomLayer"></div>
+  </div>
+
+  <!-- Rising Embers -->
+  <div id="embers"></div>
+
+  <!-- STICKY HEADER -->
+  <header id="header">
+    <div class="inner">
+      <div class="brand">
+        <div class="brand-chip"></div>
+        <div>
+          <h1>VESUVIO.EXE</h1>
+          <small>DAPRODUNIVERSO · 500T ENDGAME</small>
+        </div>
+      </div>
+      
+      <div id="currencies">
+        <div class="cur lir">
+          <span class="ico">₤</span>
+          <div>
+            <div class="lbl">Lire</div>
+            <div class="val" id="cLire">0</div>
+          </div>
+        </div>
+        <div class="cur big">
+          <span class="ico">🎟️</span>
+          <div>
+            <div class="lbl">Biglietti Rari</div>
+            <div class="val" id="cBig">0</div>
+          </div>
+        </div>
+        <div class="cur rot">
+          <span class="ico">⚙️</span>
+          <div>
+            <div class="lbl">Rottami</div>
+            <div class="val" id="cRott">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- BUFF TAGS BAR -->
+  <div id="buffbar"></div>
+
+  <!-- MAIN GAME CONTAINER -->
+  <div id="wrap">
+    
+    <!-- LEFT COLUMN: ARENA & CHARACTER -->
+    <div id="left">
+      
+      <!-- ARENA PANEL -->
+      <div id="arenaPanel">
+        <div class="pHead">
+          <div class="t" style="color:var(--aqua);">💥 ARENA · CACCIA ALLE ORDE</div>
+          <div style="font-size:0.68rem; color:var(--txt-dim);">clicca sui mostri per attaccare</div>
+        </div>
+        
+        <div id="arenaTop">
+          <div id="lvlChip">
+            <span class="star">⚡</span>
+            <span style="font-size:0.66rem; color:var(--txt-dim); font-weight:800;">LIVELLO</span>
+            <span id="lvlNum">1</span>
+          </div>
+          <div class="xpBox">
+            <div id="xpFill"></div>
+          </div>
+        </div>
+        
+        <div id="playerBar">
+          <span class="plbl">❤️ ENERGIA</span>
+          <div class="pHp">
+            <div id="pHpFill"></div>
+          </div>
+          <span id="hpLbl">100 / 100</span>
+          <div id="botToggle">🤖 AUTOMI: ON</div>
+          
+          <!-- Heat / Overcharge Bar -->
+          <div id="heatWrap">
+            <span class="hlbl">🔥 SOVRACCARICO:</span>
+            <div class="heatBar">
+              <div id="heatFill"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- ARENA COMBAT FIELD -->
+        <div id="arena">
+          <div class="gridlines"></div>
+          <div id="waveGrid"></div>
+          <div id="dmgLayer"></div>
+          
+          <!-- BOSS APPROACH BAR (shown on boss levels before engaging) -->
+          <div id="bossApproach">
+            <div class="ba-title">💀 UN BOSS PROTEGGE QUESTA STANZA</div>
+            <div class="ba-sub">Preparati quanto vuoi: gli automi continuano a lavorare. Quando sei pronto, entra nell'arena.</div>
+            <button class="bigBtn gold" id="engageBossBtn">⚔️ VAI AL BOSS</button>
+          </div>
+          
+          <!-- DOWN / DEFEAT / RETREAT OVERLAY -->
+          <div id="downOverlay">
+            <div class="big">💀 SISTEMA ABBATTUTO!</div>
+            <div class="sub" id="downTimer">Riavvio automatico in corso… oppure ritirati alla stanza precedente.</div>
+            <div class="down-actions">
+              <button class="bigBtn mint" id="repairBtn">🔧 RIPARA SUBITO (50 ⚙️)</button>
+              <button class="bigBtn gold" id="retreatBtn">↩️ TORNA ALLA STANZA PRIMA</button>
+            </div>
+          </div>
+          
+          <!-- RETREAT BAR (shown on boss levels after retreating, before re-engaging) -->
+          <div id="retreatBar" style="display:none;">
+            <div class="ba-title" style="color:var(--mint);">↩️ IN ATTESA NELLA STANZA SICURA</div>
+            <button class="bigBtn gold" id="reEngageBossBtn">⚔️ TORNA AL BOSS</button>
+          </div>
+        </div>
+        
+        <div id="arenaFoot">
+          <span id="critStat">CRIT <b>5%</b></span>
+          <span id="dpsDesc">⚡ <b id="dpsVal">1 danno</b></span>
+        </div>
+      </div>
+
+      <!-- CHARACTER VIEWER PANEL -->
+      <div id="charPanel">
+        <div class="pHead">
+          <div class="t" style="color:var(--aqua);">🤖 IL TUO ROBOT</div>
+          <div style="font-size:0.68rem; color:var(--txt-dim);">scheda &amp; equipaggiamento</div>
+        </div>
+        <div id="charView">
+          <div id="charStage"></div>
+          <div id="shower"></div>
+        </div>
+        <div class="meta">
+          <span id="charNameTag">Ferro Vecchio</span>
+          <span id="charLoadout">nessun accessorio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN: SHOP, UPGRADES, BORSA & MINIGAMES -->
+    <div id="right">
+      
+      <!-- TABS SELECTOR -->
+      <div id="tabs">
+        <div class="tab active" data-tab="tabGen">⚙️ Generatori</div>
+        <div class="tab" data-tab="tabUpg">⚡ Potenziamenti</div>
+        <div class="tab" data-tab="tabMerc">🛍️ Merceria</div>
+        <div class="tab" data-tab="tabBorsa">📈 Borsa</div>
+        <div class="tab" data-tab="tabMini">🎮 Minigiochi</div>
+        <div class="tab" data-tab="tabRob">🤖 Personaggio</div>
+        <div class="tab" data-tab="tabAch">🏆 Risultati</div>
+      </div>
+
+      <!-- PANELS CONTENT -->
+      <div id="panels">
+        
+        <!-- 1. GENERATORI -->
+        <div class="panel active" id="tabGen">
+          <h2>⚙️ I Robot del Quartiere</h2>
+          <div class="sub">Producono <b>Lire/s</b> passive in tempo reale. Il mondo sullo sfondo si accende con la produzione.</div>
+          <div id="genBuyRow" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:12px; padding:6px 10px; border-radius:14px; background:rgba(18,28,44,0.6); border:1px solid var(--line);"></div>
+          <div class="grid" id="genList"></div>
+        </div>
+
+        <!-- 2. POTENZIAMENTI -->
+        <div class="panel" id="tabUpg">
+          <h2>⚡ Potenziamenti &amp; Nuove Statistiche</h2>
+          <div class="sub">Sblocca moltiplicatori da click, potenziamenti agli automi con CAP, e le nuove statistiche <b>Multicolpo</b> e <b>Sovraccarico Termico</b>!</div>
+          <div class="upCat" id="upgCat"></div>
+          <div id="upgList"></div>
+        </div>
+
+        <!-- 3. MERCERIA & SET DI OGGETTI -->
+        <div class="panel" id="tabMerc">
+          <h2>🛍️ La Merceria di Pacco &amp; Workshop</h2>
+          <div class="sub">Acquista oggetti e pacchi con le <b>Lire</b>! Ricarica il catalogo per rarità superiori ed equipaggia 2+ pezzi per attivare le <b>Sinergie di Set</b>. Costruisci il tuo <b>Laboratorio</b> per stampare Biglietti Rari!</div>
+          
+          <div id="mercHud">
+            <div class="merc-actions">
+              <button id="rerollShopBtn">🎲 Ricarica Vetrina (Lire)</button>
+              <button class="bigBtn gold" id="wheelBtn" style="width:auto; padding:8px 18px;">🎡 Ruota della Fortuna</button>
+            </div>
+            <div id="mercDisc" style="display:none;"></div>
+          </div>
+          
+          <div id="workshopBox"></div>
+          <div id="setSynergiesBox" class="set-bonus-box"></div>
+          
+          <div class="grid" id="mercGrid"></div>
+        </div>
+
+        <!-- 4. BORSA (TELEMETRIA IN TEMPO REALE) -->
+        <div class="panel" id="tabBorsa">
+          <h2>📈 Borsa Telemetrica del Golfo</h2>
+          <div class="sub">Andamento finanziario e telemetria del tuo robot in tempo reale. Sconfiggere mostri fa salire l'indice, perdere dai Boss scatena il panico a Ponticelli!</div>
+          
+          <div id="borsaRg">
+            <div class="rg active" data-r="1h">1H (Secondi)</div>
+            <div class="rg" data-r="7d">7G (Minuti)</div>
+            <div class="rg" data-r="1m">1M (Ore)</div>
+          </div>
+          
+          <div id="borsaTicker"></div>
+          
+          <div class="borsa-canvas-wrap">
+            <canvas id="borsaCanvas" width="860" height="280"></canvas>
+          </div>
+          
+          <div id="borsaLegend"></div>
+        </div>
+
+        <!-- 5. MINIGIOCHI -->
+        <div class="panel" id="tabMini">
+          <h2>🎮 Minigiochi del Golfo</h2>
+          <div class="sub">Minigiochi ad alto rendimento con moltiplicatori <b>COMBO</b>. Vinci enormi quantità di Lire, Rottami e Biglietti Rari!</div>
+          <div id="miniList"></div>
+        </div>
+
+        <!-- 6. PERSONAGGIO -->
+        <div class="panel" id="tabRob">
+          <h2>🤖 Personalizzazione Robot</h2>
+          <div class="sub">"A Napoli, anche i robot hanno un codice." Personalizza il telaio, visori, ali, copricapi ed effetti!</div>
+          <div id="robEdit"></div>
+        </div>
+
+        <!-- 7. RISULTATI -->
+        <div class="panel" id="tabAch">
+          <h2>🏆 Risultati &amp; Statistiche Globali</h2>
+          <div class="sub">Tutti i traguardi raggiunti nella tua run verso l'endgame di <b>500T Lire</b>!</div>
+          <div id="statsList"></div>
+          
+          <h2 style="margin-top:16px;">Risultati Sbloccabili</h2>
+          <div id="achGrid" class="achGrid"></div>
+          
+          <details class="help" style="margin-top:14px; padding:12px; border-radius:12px; background:rgba(18,28,44,0.5); border:1px solid var(--line);">
+            <summary style="font-weight:900; cursor:pointer; color:var(--gold);">Guida di Gioco Completa</summary>
+            <p style="font-size:0.75rem; color:var(--txt-dim); margin-top:8px; line-height:1.6;">
+              💥 <b>Combattimento &amp; Orde</b>: Clicca sui nemici nell'Arena per eliminarli. Salendo di livello affronterai orde sempre più numerose (fino a 16 mostri) e con HP scalati per non essere mai banali.<br>
+              💀 <b>Sistema Boss</b>: Dal livello 50 ogni 5 livelli appare un Boss che ti attacca sferrando colpi reali. Se vieni abbattuto puoi ripararti, attendere, o <b>tornare alla stanza precedente</b> per farmare in sicurezza.<br>
+              🛍️ <b>Merceria &amp; Set</b>: Spendi Lire per comprare oggetti, sbloccare set (Vesuvio, Enforcer, Frutiger Aero, Robomafia, SISTEMA.EXE) e potenzia il tuo Laboratorio per generare 🎟️ Biglietti Rari.<br>
+              📈 <b>Borsa in Tempo Reale</b>: Guarda i grafici e la telemetria live dell'economia e dei tuoi danni!
+            </p>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FLOATING BORSA HUD WIDGET -->
+  <div id="floatingBorsaHud"></div>
+
+  <!-- TOAST NOTIFICATIONS (Anti-Spam) -->
+  <div id="toasts"></div>
+  <style>
+    /* Toast stack styles (self-contained so the module works standalone) */
+    #toasts{position:fixed; right:18px; bottom:18px; display:flex; flex-direction:column; gap:8px; z-index:4000; pointer-events:none; max-width:340px;}
+    #toasts .toast{display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border-radius:14px;
+      background:rgba(14,22,38,0.92); border:1px solid rgba(130,190,255,0.25); color:#dfe9f5;
+      box-shadow:0 6px 24px rgba(0,0,0,0.45); opacity:0; transform:translateY(12px);
+      transition:opacity 0.28s ease, transform 0.28s ease; font-family:inherit;}
+    #toasts .toast.on{opacity:1; transform:translateY(0);}
+    #toasts .tIco{font-size:1.3rem; line-height:1.1;}
+    #toasts .tTitle{font-weight:900; font-size:0.82rem; color:#ffd25e;}
+    #toasts .tText{font-size:0.74rem; color:#aebfd4; margin-top:2px; line-height:1.35;}
+  </style>
+
+  <!-- MODAL DIALOG CONTAINER -->
+  <div id="overlay">
+    <div id="gameBox">
+      <div class="gHead">
+        <div class="gTitle" id="gameTitle">Minigioco</div>
+        <div class="closeBtn" id="gameClose">✕</div>
+      </div>
+      <div id="gameBody"></div>
+    </div>
+  </div>
+
+  <!-- MODULAR SCRIPTS (Ordered Execution) -->
+  <script src="js/core/state.js"></script>
+  <script src="js/core/audio.js"></script>
+  <script src="js/core/math-curves.js"></script>
+  <script src="js/graphics/svg-factory.js"></script>
+  <script src="js/graphics/world-engine.js"></script>
+  <script src="js/systems/combat-waves.js"></script>
+  <script src="js/systems/boss-system.js"></script>
+  <script src="js/systems/upgrades.js"></script>
+  <script src="js/systems/merceria-gamble.js"></script>
+  <script src="js/systems/workshop-tickets.js"></script>
+  <script src="js/systems/borsa-telemetry.js"></script>
+  <script src="js/systems/minigames.js"></script>
+  <script src="js/ui/notifications.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
