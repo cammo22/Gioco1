@@ -1,0 +1,351 @@
+/* MERCERIA DI PACCO (GAMBLING & ITEM SETS) */
+
+#mercHud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.merc-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#rerollShopBtn {
+  padding: 8px 16px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, #2b3d5c, #162236);
+  border: 1px solid var(--line);
+  color: var(--txt);
+  font-weight: 800;
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+#rerollShopBtn:hover {
+  border-color: var(--line-active);
+  background: linear-gradient(180deg, #374d74, #1e2e48);
+}
+
+#mercDisc {
+  padding: 8px 14px;
+  border-radius: var(--r-md);
+  background: linear-gradient(90deg, rgba(255, 72, 36, 0.35), rgba(187, 134, 252, 0.3));
+  border: 1px solid rgba(255, 154, 60, 0.6);
+  font-weight: 900;
+  font-size: 0.8rem;
+  color: var(--gold);
+}
+
+/* SECTION TABS FOR MERCERIA */
+.merc-nav {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+
+.m-tab {
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  font-weight: 800;
+  font-size: 0.76rem;
+  color: var(--txt-dim);
+  cursor: pointer;
+  background: rgba(22, 34, 52, 0.5);
+  border: 1px solid var(--line);
+  transition: all 0.15s ease;
+}
+
+.m-tab:hover {
+  color: #fff;
+  border-color: var(--line-active);
+}
+
+.m-tab.active {
+  background: linear-gradient(180deg, var(--aqua), #228ab8);
+  color: #02202c;
+  border-color: var(--aqua);
+  box-shadow: var(--glow-cyan);
+}
+
+/* ITEM CARDS & RARITIES */
+.shopCard {
+  position: relative;
+  border-radius: var(--r-md);
+  padding: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+  background: linear-gradient(180deg, #182336, #0e1624);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+}
+
+.shopCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
+}
+
+/* RARITY TIERS */
+.shopCard.rar-comune {
+  border-top: 3px solid #b0c8de;
+}
+
+.shopCard.rar-rara {
+  border-top: 3px solid var(--aqua);
+  box-shadow: inset 0 1px 0 rgba(127, 230, 255, 0.2);
+}
+
+.shopCard.rar-epica {
+  border-top: 3px solid var(--purple);
+  box-shadow: 0 0 14px rgba(187, 134, 252, 0.25);
+}
+
+.shopCard.rar-leggendaria {
+  border-top: 3px solid var(--gold);
+  box-shadow: 0 0 20px rgba(255, 210, 94, 0.35);
+}
+
+.shopCard.rar-mitica {
+  border-top: 3px solid var(--lava);
+  box-shadow: 0 0 24px rgba(255, 72, 36, 0.5);
+  animation: mythicShine 3s infinite alternate;
+}
+
+@keyframes mythicShine {
+  from { filter: drop-shadow(0 0 4px var(--lava)); }
+  to { filter: drop-shadow(0 0 12px var(--gold)); }
+}
+
+.shopCard .sIcon {
+  font-size: 2.3rem;
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+
+.shopCard .sName {
+  font-weight: 900;
+  font-size: 0.88rem;
+  margin-top: 2px;
+}
+
+.shopCard .sRarity {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 900;
+  margin: 2px 0 4px;
+}
+
+.shopCard.rar-comune .sRarity { color: #b0c8de; }
+.shopCard.rar-rara .sRarity { color: var(--aqua); }
+.shopCard.rar-epica .sRarity { color: var(--purple); }
+.shopCard.rar-leggendaria .sRarity { color: var(--gold); }
+.shopCard.rar-mitica .sRarity { color: var(--lava); }
+
+.shopCard .sSet {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 6px;
+  display: inline-block;
+  align-self: center;
+}
+
+.shopCard .sDesc {
+  font-size: 0.68rem;
+  color: var(--txt-dim);
+  min-height: 28px;
+  line-height: 1.3;
+}
+
+.shopCard .sCost {
+  font-weight: 900;
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.shopCard .sBtn {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.74rem;
+  font-weight: 900;
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(180deg, #ffd76a, #ff9a3c);
+  color: #241303;
+  transition: all 0.15s ease;
+}
+
+.shopCard.owned .sBtn {
+  background: #184234;
+  color: #a4f4d4;
+}
+
+/* Action button rows (Equipaggia / Potenzia / Compra) */
+.shopCard .sBtnRow {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.shopCard .sBtnRow .sBtn {
+  flex: 1 1 auto;
+  margin-top: 0;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  text-align: center;
+  min-width: 0;
+}
+
+.shopCard .sBtnRow .act-equip {
+  background: linear-gradient(180deg, #2f8f6a, #1c5c44);
+  color: #c8ffe8;
+}
+
+.shopCard .sBtnRow .act-upgrade {
+  background: linear-gradient(180deg, #4a5a74, #2c3a50);
+  color: #cfe0f5;
+}
+
+.shopCard .sBtnRow .act-upgrade.okBtn {
+  background: linear-gradient(180deg, #3a7fd0, #2456a0);
+  color: #e8f2ff;
+}
+
+.shopCard .sBtnRow .act-buy {
+  background: linear-gradient(180deg, #ffd76a, #ff9a3c);
+  color: #241303;
+}
+
+.shopCard .sBtnRow .sBtn.noBtn {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* SET BONUSES WIDGET */
+.set-bonus-box {
+  background: rgba(18, 28, 44, 0.7);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.set-bonus-box h3 {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--aqua);
+  margin-bottom: 8px;
+}
+
+.set-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.set-badge {
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  background: rgba(24, 38, 60, 0.6);
+  border: 1px solid rgba(130, 190, 255, 0.15);
+  font-size: 0.72rem;
+}
+
+.set-badge.active {
+  border-color: var(--gold);
+  background: rgba(46, 38, 20, 0.7);
+  box-shadow: 0 0 12px rgba(255, 210, 94, 0.25);
+}
+
+.set-badge .sn {
+  font-weight: 900;
+  color: var(--txt);
+  display: flex;
+  justify-content: space-between;
+}
+
+.set-badge .sb {
+  font-size: 0.64rem;
+  color: var(--txt-dim);
+  margin-top: 2px;
+}
+
+.set-badge.active .sb {
+  color: var(--gold);
+}
+
+/* TICKET WORKSHOP / ATELIER */
+#workshopBox {
+  background: linear-gradient(180deg, rgba(28, 42, 68, 0.8), rgba(16, 24, 40, 0.9));
+  border: 1px solid var(--aqua);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--glow-cyan);
+}
+
+.ws-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ws-top h3 {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: var(--aqua);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ws-progress-wrap {
+  width: 100%;
+  height: 12px;
+  border-radius: var(--r-full);
+  background: rgba(14, 22, 36, 0.9);
+  overflow: hidden;
+  border: 1px solid rgba(127, 230, 255, 0.4);
+  margin-bottom: 10px;
+}
+
+#wsProgressFill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--r-full);
+  background: linear-gradient(90deg, #7fe6ff, #ffd76a);
+  box-shadow: 0 0 12px rgba(127, 230, 255, 0.6);
+  transition: width 0.3s ease;
+}
+
+.ws-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--txt-dim);
+  margin-bottom: 10px;
+}
+
+.ws-stats b {
+  color: var(--gold);
+}
