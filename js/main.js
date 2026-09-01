@@ -100,19 +100,21 @@ function bindGlobalEvents() {
   const notifToggleBtn = document.getElementById("notificationToggle");
   if (notifToggleBtn) {
     const updateNotifBtn = () => {
-      if (notificationsEnabled) {
+      if (window.notificationsEnabled) {
         notifToggleBtn.classList.remove("disabled");
         notifToggleBtn.textContent = "🔔";
+        notifToggleBtn.title = "Notifiche attive (clicca per disabilitare)";
       } else {
         notifToggleBtn.classList.add("disabled");
         notifToggleBtn.textContent = "🔕";
+        notifToggleBtn.title = "Notifiche disattive (clicca per abilitare)";
       }
     };
     updateNotifBtn();
     notifToggleBtn.onclick = (e) => {
       e.stopPropagation();
-      notificationsEnabled = !notificationsEnabled;
-      localStorage.setItem("notificationsEnabled", notificationsEnabled);
+      window.notificationsEnabled = !window.notificationsEnabled;
+      localStorage.setItem("notificationsEnabled", window.notificationsEnabled);
       updateNotifBtn();
       if (typeof sClick === "function") sClick();
     };

@@ -16,4 +16,4 @@ Un intenso **idle clicker game** ambientato nel cyberpunk di Ponticelli, dove cl
   <img src="https://img.shields.io/badge/%E2%86%92_Gioca_su_GitHub_Pages-58a6ff?style=for-the-badge&logo=github" alt="Play on GitHub Pages">
 </a>
 
-[Apri il gioco](https://cammo22.github.io/Gioco1/){:target="_blank"}
+<a href="https://cammo22.github.io/Gioco1/" target="_blank">Apri il gioco</a>
