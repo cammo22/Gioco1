@@ -344,7 +344,6 @@ function initFloatingBorsaHud() {
       <span class="f-rate" style="color:var(--mint);">☠️ <b id="hudKills">0</b>/s</span>
       <span class="f-rate" style="color:var(--purple);">Fid. <b id="hudTrust">100%</b></span>
     </div>
-    <div class="f-hint">trascina per spostare · doppio click per aprire</div>
   `;
   
   // DRAG support (editable directly on background)
