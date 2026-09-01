@@ -96,6 +96,28 @@ function bindGlobalEvents() {
     };
   }
   
+  // Notification Toggle
+  const notifToggleBtn = document.getElementById("notificationToggle");
+  if (notifToggleBtn) {
+    const updateNotifBtn = () => {
+      if (notificationsEnabled) {
+        notifToggleBtn.classList.remove("disabled");
+        notifToggleBtn.textContent = "🔔";
+      } else {
+        notifToggleBtn.classList.add("disabled");
+        notifToggleBtn.textContent = "🔕";
+      }
+    };
+    updateNotifBtn();
+    notifToggleBtn.onclick = (e) => {
+      e.stopPropagation();
+      notificationsEnabled = !notificationsEnabled;
+      localStorage.setItem("notificationsEnabled", notificationsEnabled);
+      updateNotifBtn();
+      if (typeof sClick === "function") sClick();
+    };
+  }
+  
   // Downed overlay buttons
   const repairBtn = document.getElementById("repairBtn");
   if (repairBtn) {

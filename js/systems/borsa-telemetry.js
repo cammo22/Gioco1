@@ -334,15 +334,23 @@ function initFloatingBorsaHud() {
   }
   
   widget.innerHTML = `
-    <div class="f-title">📈 BORSA DEL GOLFO</div>
-    <canvas id="hudSpark" width="170" height="42"></canvas>
-    <div class="f-row">
-      <span class="f-rate">₤ <b id="hudProd">0</b>/s</span>
-      <span class="f-rate" style="color:var(--aqua);">💥 <b id="hudDps">0</b></span>
+    <div class="f-left">
+      <div class="f-title">📈 BORSA</div>
+      <canvas id="hudSpark" width="140" height="50"></canvas>
     </div>
-    <div class="f-row">
-      <span class="f-rate" style="color:var(--mint);">☠️ <b id="hudKills">0</b>/s</span>
-      <span class="f-rate" style="color:var(--purple);">Fid. <b id="hudTrust">100%</b></span>
+    <div class="f-right">
+      <div class="f-row">
+        <span class="f-rate">₤ <b id="hudProd">0</b>/s</span>
+      </div>
+      <div class="f-row">
+        <span class="f-rate" style="color:var(--aqua);">💥 <b id="hudDps">0</b></span>
+      </div>
+      <div class="f-row">
+        <span class="f-rate" style="color:var(--mint);">☠️ <b id="hudKills">0</b>/s</span>
+      </div>
+      <div class="f-row">
+        <span class="f-rate" style="color:var(--purple);">Fid. <b id="hudTrust">100%</b></span>
+      </div>
     </div>
   `;
   
@@ -360,8 +368,10 @@ function initFloatingBorsaHud() {
   }
   
   widget.addEventListener("pointerdown", (e) => {
-    // Only drag from title area to keep clicks elsewhere
-    if (!e.target.classList.contains("f-title")) return;
+    // Allow drag from left side (title + chart) or from title
+    const leftSide = e.target.closest(".f-left");
+    const titleArea = e.target.classList.contains("f-title");
+    if (!leftSide && !titleArea) return;
     dragging = true;
     dx = e.clientX - widget.offsetLeft;
     dy = e.clientY - widget.offsetTop;

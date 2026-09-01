@@ -178,15 +178,16 @@
   background: rgba(10, 16, 28, 0.88);
   border: 1px solid var(--line);
   border-radius: var(--r-md);
-  padding: 8px 12px;
+  padding: 0;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  cursor: move;
   transition: all 0.2s ease;
+  min-width: 280px;
 }
 
 #floatingBorsaHud:hover {
@@ -194,26 +195,46 @@
   transform: translateY(-2px);
 }
 
+#floatingBorsaHud .f-left {
+  padding: 10px 12px;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#floatingBorsaHud .f-right {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  justify-content: center;
+}
+
 #floatingBorsaHud .f-title {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 900;
   color: var(--gold);
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: grab;
+  user-select: none;
+}
+
+#floatingBorsaHud .f-title:active {
+  cursor: grabbing;
 }
 
 #floatingBorsaHud .f-rate {
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   font-weight: 900;
   color: var(--txt);
+  white-space: nowrap;
 }
 
-#floatingBorsaHud .f-hint {
-  font-size: 0.6rem;
-  color: var(--txt-dim);
-  text-align: center;
-  margin-top: 4px;
-  opacity: 0.7;
+#floatingBorsaHud .f-row {
+  display: flex;
+  align-items: center;
 }

@@ -7,8 +7,12 @@
 // ==================== TOASTS ====================
 const TOAST_ICONS_OK = true;
 let _toastLastByKey = {};   // anti-spam: same key not more than once per 1.2s
+let notificationsEnabled = localStorage.getItem("notificationsEnabled") !== "false";
 
 function toast(icon, title, body, opts) {
+  // Skip if notifications are disabled
+  if (!notificationsEnabled) return;
+  
   opts = opts || {};
   const bar = document.getElementById("toasts");
   if (!bar) {
