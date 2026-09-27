@@ -9,6 +9,11 @@ subito dopo il push su `main`.
 sezione `## [X.Y.Z]` e si unisce su `main`. Il resto (prove, APK, EXE, DMG, release) lo fa GitHub Actions.
 Chi gioca dal browser vede comparire "È online la vX.Y.Z — Aggiorna ora"; chi usa l'app vede "Scarica".
 
+## [2.2.1] — 2026-09-27 · I potenziamenti in piccolo
+
+- **I potenziamenti DaProd accesi si rimpiccioliscono**: «minimizzare i potenziamenti acquistati e attivi». Il tasto ⚡
+  sopra le pastiglie le riduce a icona e tempo, e il gioco se lo ricorda. C'è anche nelle opzioni.
+
 ## [2.2.0] — 2026-09-26 · La Merceria dei set, e lire o euro davvero
 
 - **La Merceria gira intorno ai set**: «voglio vedere bene i set, poterli switchare e capire bene a che livello». In cima
